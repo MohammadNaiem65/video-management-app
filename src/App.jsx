@@ -1,11 +1,14 @@
-import Home from './pages/Home/Home';
-import VideoDescriptions from './pages/VideoDescriptions/VideoDescriptions';
+import { Outlet } from 'react-router-dom';
+import Navbar from './components/Navbar/Navbar';
+import Footer from './components/Footer/Footer';
 
 function App() {
 	return (
-		<div className='w-full min-h-screen bg-slate-200 text-white'>
-			<VideoDescriptions />
-		</div>
+		<>
+			<Navbar />
+			<Outlet />
+			<Footer />
+		</>
 	);
 }
 
