@@ -7,7 +7,7 @@ import Loading from '../ui/Loading/Loading';
 export default function Videos() {
 	// ! Required hooks and variables
 	const dispatch = useDispatch();
-	const { videos, isLoading, isError, error } = useSelector(
+	const { videos, isLoading, isError } = useSelector(
 		(state) => state.videos
 	);
 
