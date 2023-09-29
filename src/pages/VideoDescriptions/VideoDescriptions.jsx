@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RelatedVideoList from '../../components/RelatedVideoList/RelatedVideoList';
 import VideoDescription from '../../components/VideoDescription/VideoDescription';
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer';
@@ -10,6 +10,10 @@ export default function VideoDescriptions() {
 	// ! Required hooks and variables
 	const dispatch = useDispatch();
 	const { videoId } = useParams();
+	const videoDetails = useSelector((state) => state.video.video);
+
+	const { id, title, description, date, link, likes, unlikes, tags } =
+		videoDetails;
 
 	// get video details
 	useEffect(() => {
@@ -22,14 +26,20 @@ export default function VideoDescriptions() {
 				<div className='grid grid-cols-3 gap-2 lg:gap-8'>
 					<div className='col-span-full w-full space-y-8 lg:col-span-2'>
 						{/* <!-- video player --> */}
-						<VideoPlayer />
+						<VideoPlayer link={link} title={title} />
 
 						{/* <!-- video description --> */}
-						<VideoDescription />
+						<VideoDescription
+							title={title}
+							date={date}
+							description={description}
+							likes={likes}
+							unlikes={unlikes}
+						/>
 					</div>
 
 					{/* <!-- related videos --> */}
-					<RelatedVideoList />
+					<RelatedVideoList id={id} tags={tags} />
 				</div>
 			</div>
 		</section>

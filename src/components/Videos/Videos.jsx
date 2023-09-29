@@ -3,24 +3,21 @@ import Video from './Video';
 import { useEffect } from 'react';
 import { fetchVideos } from '../../features/videos/videosSlice';
 import Loading from '../ui/Loading/Loading';
+import NothingFound from '../ui/NothingFound/NothingFound';
+import Error from '../ui/Error/Error';
 
 export default function Videos() {
 	// ! Required hooks and variables
 	const dispatch = useDispatch();
-	const { videos, isLoading, isError } = useSelector(
-		(state) => state.videos
-	);
+	const { videos, isLoading, isError } = useSelector((state) => state.videos);
 
 	let content;
 	if (isLoading) content = <Loading />;
-	if (!isLoading && videos)
+	if (!isLoading && videos.length === 0) content = <NothingFound />;
+	if (!isLoading && isError) content = <Error />;
+	if (!isLoading && videos) {
 		content = videos.map((video) => <Video key={video.id} video={video} />);
-	if (!isLoading && videos.length === 0)
-		content = (
-			<h1 className='text-center text-xl font-bold'>Nothing found.</h1>
-		);
-	if (!isLoading && isError)
-		content = <div className='col-span-12'>Some error happened.</div>;
+	}
 
 	useEffect(() => {
 		dispatch(fetchVideos());
